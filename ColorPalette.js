@@ -2,7 +2,10 @@
 ColorPalette = {};
 (function() {
 	var PALETTE_SIZE = 120;
-	var DEFAULT_COLORS = [{b:0,r:0,g:0,a:255},{b:255,r:0,g:0,a:255},{b:0,r:255,g:0,a:255},{b:255,r:255,g:0,a:255},{b:0,r:0,g:255,a:255},{b:255,r:0,g:255,a:255},{b:0,r:255,g:255,a:255},{b:255,r:255,g:255,a:255}];
+	var DEFAULT_COLORS = [
+		C(0,0,0,255), C(255,0,0,255), C(0,255,0,255),
+		C(255,255,0,255), C(0,0,255,255), C(255,0,255,255),
+		C(0,255,255,255), C(255,255,255,255)];
 	var MARGIN = 3;
 
 	ColorPalette = function(owner, onColorClicked) {
@@ -45,7 +48,7 @@ ColorPalette = {};
 		function colorMassSelected(color) {
 			for (var i = 0, max = colorMassList.length; i < max; i ++) {
 				var mass = colorMassList[i];
-				if (mass.color == color) {
+				if (mass.color.equals(color)) {
 					mass.selected();
 				} else {
 					mass.unSelected();
@@ -60,7 +63,7 @@ ColorPalette = {};
 				.addClass("cp_color_mass")
 				.addClass("cp_color_mass_normal")
 				.css({
-					background: c_s(color),
+					background: color.css(),
 				}).click(function() {
 					colorMassSelected(color);
 					clickListener(color)
@@ -92,7 +95,4 @@ function map(f, list) {
 		ret.push(f(list[i]));
 	}
 	return ret;
-}
-function c_s(color) {
-	return "rgba(" + color.r + "," + color.g + "," + color.b + "," + color.a + ")";
 }

@@ -59,13 +59,11 @@ ColorPicker = {};
 			owner.dialog("open");
 		}
 		function repaintSample() {
-			color = {
-				r:rInput.val() * 1,
-				g:gInput.val() * 1,
-				b:bInput.val() * 1,
-				a:aInput.val() * 1
-			};
-			sampleView.css("background", c_s(color));
+			color = C(rInput.val() * 1,
+				gInput.val() * 1,
+				bInput.val() * 1,
+				aInput.val() * 1);
+			sampleView.css("background", color.css());
 		}
 		function currentColor() {
 			return color;

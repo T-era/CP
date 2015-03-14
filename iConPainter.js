@@ -2,9 +2,9 @@
 var iConPainter;
 (function() {
 	var DISPLAY_SIZE = 360;
-	var LINES = 20;
+	var LINES = 30;
 	var CELL_SIZE = DISPLAY_SIZE / LINES;
-	var BLACK = {r:0,g:0,b:0,a:255};
+	var BLACK = C(0,0,0,255);
 	iConPainter = function(owner) {
 		var canvas = $("<canvas>", {width: DISPLAY_SIZE + 1, height: DISPLAY_SIZE + 1})
 			.addClass("cp_painter")
@@ -26,6 +26,7 @@ var iConPainter;
 		var control = $("<div>")
 			.addClass("cp_control")
 			.appendTo(owner);
+		var coverPaint = new CoverPaint(control, null, LINES, LINES);
 		var colorPallette = new ColorPalette(control, function(color) {
 			currentColor = color;
 		});
@@ -52,12 +53,18 @@ var iConPainter;
 					* cnv.height / cnv.offsetHeight;
 			var lx = Math.floor(x / CELL_SIZE);
 			var ly = Math.floor(y / CELL_SIZE);
-			paintACell(lx, ly, currentColor);
+			coverPaint.clickListener(
+				lx, ly, currentColor, 
+				function(x, y) { return painter2.getColor(x, y); }, 
+				paintACell);
+//			paintACell(lx, ly, currentColor);
+		}
+		function getCurrentColor(x, y) {
+			
 		}
 		function paintACell(x, y, c) {
 			if (x < 0 || x >= LINES
-				|| y < 0 || y >= LINES
-				|| ! currentColor) return;
+				|| y < 0 || y >= LINES) return;
 
 			painter1.putPoints(c, x * CELL_SIZE+1, y * CELL_SIZE+1, CELL_SIZE - 1, CELL_SIZE - 1);
 			painter2.putPoints(c, x, y, 1, 1);
