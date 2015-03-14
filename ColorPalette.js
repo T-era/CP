@@ -14,23 +14,19 @@ ColorPalette = {};
 			.appendTo(owner)
 			.click(colorPicker.show);
 
-		var div = $("<div>")
+		var palette = $("<div>")
 			.appendTo(owner)
 			.width(PALETTE_SIZE)
 			.height(PALETTE_SIZE)
-			.css({
-				display: "block",
-				position: "relative",
-				background: "#ccc"
-			});
+			.addClass("cp_palette");
 		var colors = DEFAULT_COLORS;
 		var colorMassList = map(
-			function(c) { return new ColorMass(c, div, onColorClicked) },
+			function(c) { return new ColorMass(c, palette, onColorClicked) },
 			colors);
 
 		this.disposit = function() {
 			var rows = Math.ceil(Math.sqrt(colors.length));
-			var cellSize = div.width() / rows;
+			var cellSize = palette.width() / rows;
 			for (var i = 0, max = colors.length; i < max; i ++) {
 				var lx = i % rows;
 				var ly = Math.floor(i / rows);
@@ -42,30 +38,50 @@ ColorPalette = {};
 		this.disposit();
 		this.addColor = function(color) {
 			colors.push(color);
-			colorMassList.push(new ColorMass(color, div, onColorClicked));
+			colorMassList.push(new ColorMass(color, palette, onColorClicked));
 			this.disposit();
+		}
+
+		function colorMassSelected(color) {
+			for (var i = 0, max = colorMassList.length; i < max; i ++) {
+				var mass = colorMassList[i];
+				if (mass.color == color) {
+					mass.selected();
+				} else {
+					mass.unSelected();
+				}
+			}
 		}
 
 		function ColorMass(color, ownerDom, clickListener) {
 			this.color = color;
 			var dom = $("<div>")
 				.appendTo(ownerDom)
+				.addClass("cp_color_mass")
+				.addClass("cp_color_mass_normal")
 				.css({
 					background: c_s(color),
-					margin: MARGIN + "px",
-					position: "absolute"
 				}).click(function() {
+					colorMassSelected(color);
 					clickListener(color)
 				});
 
 			this.setPos = function(x, y, size) {
 				dom.css({
-					left: x + "px",
-					top: y + "px",
+					left: x - 2 + "px",
+					top: y - 2 + "px",
 					width: size + "px",
 					height: size + "px"
 				});
-			}
+			};
+			this.unSelected = function() {
+				dom.removeClass("cp_color_mass_selected");
+				dom.addClass("cp_color_mass_normal");
+			};
+			this.selected = function() {
+				dom.addClass("cp_color_mass_selected");
+				dom.removeClass("cp_color_mass_normal");
+			};
 		}
 	};
 })();

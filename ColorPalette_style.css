@@ -1,0 +1,29 @@
+.cp_color_mass {
+	position: absolute;
+	margin: 1px,
+	border-width: 2px;
+	border-style: solid;
+}
+.cp_color_mass_normal {
+	border-color: #ccc;
+}
+.cp_color_mass_selected {
+	border-color: black;
+}
+canvas.cp_painter {
+	float: left;
+	background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAYAAADED76LAAAAJ0lEQVQYV2M8cOD/fwYkoMjwCJnLwEgHBQ8PPERxw30GOVQ30F4BABC6JAVeBz94AAAAAElFTkSuQmCC);
+}
+canvas.cp_output {
+	background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAYAAADED76LAAAAJ0lEQVQYV2M8cOD/fwYkoMjwCJnLwEgHBQ8PPERxw30GOVQ30F4BABC6JAVeBz94AAAAAElFTkSuQmCC);
+}
+div.cp_control {
+	float: left;
+	margin: 10px;
+}
+div.cp_palette {
+	display: block;
+	position: relative;
+	background: #ccc;
+	margin: 3px;
+}

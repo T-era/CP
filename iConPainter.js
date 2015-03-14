@@ -7,15 +7,14 @@ var iConPainter;
 	var BLACK = {r:0,g:0,b:0,a:255};
 	iConPainter = function(owner) {
 		var canvas = $("<canvas>", {width: DISPLAY_SIZE + 1, height: DISPLAY_SIZE + 1})
-			.css("float", "left")
-			.css("background", "url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAYAAADED76LAAAAJ0lEQVQYV2M8cOD/fwYkoMjwCJnLwEgHBQ8PPERxw30GOVQ30F4BABC6JAVeBz94AAAAAElFTkSuQmCC)")
+			.addClass("cp_painter")
 			.appendTo(owner)
 			.click(clickedACell);
 		var cnv = canvas[0];
 		cnv.width = DISPLAY_SIZE + 1;
 		cnv.height = DISPLAY_SIZE + 1;
 		var output = $("<canvas>", {width: LINES, height: LINES})
-			.css("background", "url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAYAAADED76LAAAAJ0lEQVQYV2M8cOD/fwYkoMjwCJnLwEgHBQ8PPERxw30GOVQ30F4BABC6JAVeBz94AAAAAElFTkSuQmCC)")
+			.addClass("cp_output")
 			.appendTo(owner);
 		var otp = output[0];
 		otp.width = LINES;
@@ -24,18 +23,16 @@ var iConPainter;
 		var painter2 = new CellPainter(otp);
 
 		var currentColor;
-		var div = $("<div>")
-			.css({
-				float: "left",
-				margin: "10px"
-			}).appendTo(owner);
-		var colorPallette = new ColorPalette(div, function(color) {
+		var control = $("<div>")
+			.addClass("cp_control")
+			.appendTo(owner);
+		var colorPallette = new ColorPalette(control, function(color) {
 			currentColor = color;
 		});
 		drawgrid();
 		var buttonExport = $("<button>")
 			.text("Export")
-			.appendTo(div)
+			.appendTo(control)
 			.click(function() {
 				alert(output[0].toDataURL());
 			});

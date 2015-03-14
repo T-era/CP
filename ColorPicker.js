@@ -25,7 +25,6 @@ ColorPicker = {};
 				}
 			}
 		});
-		var color = {r:0,g:0,b:0};
 
 		var sampleView = $("<div>")
 			.css({
