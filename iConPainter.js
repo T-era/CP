@@ -57,10 +57,6 @@ var iConPainter;
 				lx, ly, currentColor, 
 				function(x, y) { return painter2.getColor(x, y); }, 
 				paintACell);
-//			paintACell(lx, ly, currentColor);
-		}
-		function getCurrentColor(x, y) {
-			
 		}
 		function paintACell(x, y, c) {
 			if (x < 0 || x >= LINES

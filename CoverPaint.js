@@ -5,7 +5,7 @@ function CoverPaint(buttonOwner, paintCallback, width, height) {
 		.addClass("cp_cover_button")
 		.addClass("cp_cover_button_normal")
 		.appendTo(buttonOwner)
-		.click(paintModeOn);
+		.click(paintModeChange);
 
 	this.clickListener = function(x, y, newColor, getCurrentColor, paintCallBack) {
 		if (paintMode) {
@@ -36,9 +36,14 @@ function CoverPaint(buttonOwner, paintCallback, width, height) {
 			_inner(x, y - 1);
 		}
 	}
-	function paintModeOn() {
-		paintMode = true;
-		button.removeClass("cp_cover_button_normal");
-		button.addClass("cp_cover_button_selected");
+	function paintModeChange() {
+		paintMode = ! paintMode;
+		if (paintMode) {
+			button.removeClass("cp_cover_button_normal");
+			button.addClass("cp_cover_button_selected");
+		} else {
+			button.removeClass("cp_cover_button_selected");
+			button.addClass("cp_cover_button_normal");
+		}
 	}
 }
