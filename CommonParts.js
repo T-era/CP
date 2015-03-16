@@ -1,20 +1,29 @@
 ;
-function CellPainter(canvas) {
+function CellPainter(canvas, times) {
 	var context = canvas.getContext("2d");
-	this.putPoints = function(color, x, y, width, height) {
-		var id = context.getImageData(x, y, width, height);
-		var data = id.data;
-		for (var i = 0, max = data.length; i < max; i += 4) {
-			data[i + 0] = color.r;
-			data[i + 1] = color.g;
-			data[i + 2] = color.b;
-			data[i + 3] = color.a;
+	var width = canvas.width;
+	var height = canvas.height;
+	var imageData = context.getImageData(0, 0, width, height);
+
+	this.putPoints = function(color, x, y) {
+		var data = imageData.data;
+		for (var dx = 0; dx < times; dx ++) {
+			for (var dy = 0; dy < times; dy ++) {
+				var i = ((y * times + dy) * width + (x * times + dx)) * 4;
+				data[i + 0] = color.r;
+				data[i + 1] = color.g;
+				data[i + 2] = color.b;
+				data[i + 3] = color.a;
+			}
 		}
-		context.putImageData(id,x,y);
 	};
+	this.draw = function() {
+		context.putImageData(imageData,0,0);
+	}
 	this.getColor = function(x, y) {
-		var data = context.getImageData(x, y, 1, 1).data;
-		return C(data[0],data[1],data[2],data[3]);
+		var i = ((y * times * width) + x * times) * 4
+		var data = imageData.data;
+		return C(data[i+0],data[i+1],data[i+2],data[i+3]);
 	}
 }
 function C(r,g,b,a) {
