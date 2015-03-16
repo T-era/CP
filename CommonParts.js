@@ -5,6 +5,11 @@ function CellPainter(canvas, times) {
 	var height = canvas.height;
 	var imageData = context.getImageData(0, 0, width, height);
 
+	this.init = function() {
+		width = canvas.width;
+		height = canvas.height;
+		imageData = context.getImageData(0, 0, width, height);
+	}
 	this.putPoints = function(color, x, y) {
 		var data = imageData.data;
 		for (var dx = 0; dx < times; dx ++) {
@@ -24,6 +29,15 @@ function CellPainter(canvas, times) {
 		var i = ((y * times * width) + x * times) * 4
 		var data = imageData.data;
 		return C(data[i+0],data[i+1],data[i+2],data[i+3]);
+	}
+	this.clear = function(color) {
+		data = imageData.data;
+		for (var i = 0, max = data.length; i < max; i += 4) {
+			data[i+0] = color.r;
+			data[i+1] = color.g;
+			data[i+2] = color.b;
+			data[i+3] = color.a;
+		}
 	}
 }
 function C(r,g,b,a) {

@@ -12,7 +12,7 @@ function CoverPaint(buttonOwner, painters, width, height) {
 		}
 	}
 
-	this.clickListener = function(x, y, newColor) {
+	this.paint = function(x, y, newColor) {
 		if (paintMode) {
 			paintMode = false;
 			button.removeClass("cp_cover_button_selected");
@@ -48,13 +48,6 @@ function CoverPaint(buttonOwner, painters, width, height) {
 			_inner(x - 1, y);
 			_inner(x, y + 1);
 			_inner(x, y - 1);
-		}
-		function paint(x, y, newColor) {
-			var index = (y * canvas.width + x) * 4;
-			imageData[index + 0] = newColor.r;
-			imageData[index + 1] = newColor.g;
-			imageData[index + 2] = newColor.b;
-			imageData[index + 3] = newColor.a;
 		}
 	}
 	function paintModeChange() {
