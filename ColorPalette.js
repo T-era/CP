@@ -12,8 +12,8 @@ ColorPalette = {};
 		var that = this;
 		var colorPicker = new ColorPicker(owner, function(c) { that.addColor(c); });
 
-		$("<button>")
-			.text("Add color")
+		$("<div>")
+			.addClass("cp_add_color_button")
 			.appendTo(owner)
 			.click(colorPicker.show);
 

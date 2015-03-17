@@ -3,6 +3,8 @@ ColorPicker = {};
 (function() {
 	var SAMPLE_VEIW_SIZE = 120;
 	var INPUT_WIDTH = 200;
+	var color = C(0,0,0,255);
+
 	ColorPicker = function(parent, callback) {
 		var owner = $("<div>")
 			.appendTo(parent);
@@ -25,7 +27,16 @@ ColorPicker = {};
 				}
 			}
 		});
+		ColorPicker.generateInput(owner);
+		this.show = function() {
+			owner.dialog("open");
+		}
+		function currentColor() {
+			return color;
+		}
+	}
 
+	ColorPicker.generateInput = function(owner) {
 		var sampleView = $("<div>")
 			.css({
 				width: SAMPLE_VEIW_SIZE + "px",
@@ -37,10 +48,10 @@ ColorPicker = {};
 			.css({
 				float: "left"
 			}).appendTo(owner);
-		var rInput = addColorPointer("R", pointDiv, 0);
-		var gInput = addColorPointer("G", pointDiv, 0);
-		var bInput = addColorPointer("B", pointDiv, 0);
-		var aInput = addColorPointer("A", pointDiv, 255);
+		var rInput = addColorPointer("R", pointDiv, color.r);
+		var gInput = addColorPointer("G", pointDiv, color.g);
+		var bInput = addColorPointer("B", pointDiv, color.b);
+		var aInput = addColorPointer("A", pointDiv, color.a);
 		repaintSample();
 
 		function addColorPointer(caption, parent, defValue) {
@@ -55,18 +66,12 @@ ColorPicker = {};
 				.change(repaintSample);
 		}
 
-		this.show = function() {
-			owner.dialog("open");
-		}
 		function repaintSample() {
 			color = C(rInput.val() * 1,
 				gInput.val() * 1,
 				bInput.val() * 1,
 				aInput.val() * 1);
 			sampleView.css("background", color.css());
-		}
-		function currentColor() {
-			return color;
 		}
 	};
 })();
